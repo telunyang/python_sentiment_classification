@@ -34,8 +34,7 @@ def predict():
     '''資料轉換'''
     list_dataset = test_csv.values.tolist()
     for dataset in list_dataset:
-        text = dataset[1]
-        test_data.append(text)
+        test_data.append(dataset[1])
     
     '''pre-trained model、batch size 與 epoch'''
     model_name = 'roberta-base'
