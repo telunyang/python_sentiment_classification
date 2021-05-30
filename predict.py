@@ -38,12 +38,12 @@ def predict():
         test_data.append(text)
     
     '''pre-trained model、batch size 與 epoch'''
-    model_name = 'roberta-large'
+    model_name = 'roberta-base'
     batch_size = 64
-    epoch = 5
+    epoch = 20
 
     '''output 資料夾'''
-    output_dir = f"outputs/{model_name}-epoch-5-cls-model/"
+    output_dir = f"outputs/{model_name}-bs-{batch_size}-ep-{epoch}-cls-model/"
 
     '''自訂參數'''
     model_args = ClassificationArgs()
@@ -78,7 +78,6 @@ def predict():
     strDataTime = datetime.datetime.today().strftime("%Y%m%d%H%M%S")
     result_df = pd.DataFrame(list_result)
     result_df.columns = ["ID", "sentiment"]
-    # result_df.to_excel(f"{strDataTime}.xlsx", sheet_name='訓練結果')
     result_df.to_csv(f"{strDataTime}.csv", index=False)
 
     '''計時結束'''
