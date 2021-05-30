@@ -45,7 +45,7 @@ def train():
 
     '''pre-trained model、batch size 與 epoch'''
     model_name = 'roberta-large'
-    batch_size = 512
+    batch_size = 64
     epoch = 5
 
     '''output 資料夾'''
@@ -65,7 +65,7 @@ def train():
     # model_args.regression = True
 
     '''建立 ClassificationModel'''
-    model = ClassificationModel('roberta', model_name, use_cuda=True, cuda_device=1, args=model_args)
+    model = ClassificationModel('roberta', model_name, use_cuda=torch.cuda.is_available(), cuda_device=1, args=model_args)
 
     '''訓練model'''
     model.train_model(train_df)
