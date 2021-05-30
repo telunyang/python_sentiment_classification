@@ -64,7 +64,7 @@ def train():
     # model_args.regression = True
 
     '''建立 ClassificationModel'''
-    model = ClassificationModel('roberta', model_name, use_cuda=True, args=model_args)
+    model = ClassificationModel('roberta', model_name, use_cuda=True, cuda_device=1, args=model_args)
 
     '''訓練model'''
     model.train_model(train_df)

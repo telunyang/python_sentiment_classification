@@ -58,7 +58,7 @@ def predict():
     # model_args.regression = True
 
     '''建立 ClassificationModel'''
-    model = ClassificationModel('roberta', model_name, use_cuda=True, args=model_args)
+    model = ClassificationModel('roberta', model_name, use_cuda=True, cuda_device=1, args=model_args)
 
     '''預測結果'''
     predictions, raw_outputs = model.predict(test_data)
