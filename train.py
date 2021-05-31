@@ -47,7 +47,7 @@ def train():
 
     '''pre-trained model、batch size 與 epoch'''
     model_name = 'roberta-base'
-    batch_size = 256
+    batch_size = 128
     epoch = 10
 
     '''output 資料夾'''
