@@ -10,13 +10,17 @@ import torch
 https://simpletransformers.ai/docs/binary-classification/
 [2] Pretrained models
 https://huggingface.co/transformers/pretrained_models.html
+[3] Configuring a Simple Transformers Model
+https://simpletransformers.ai/docs/usage/#configuring-a-simple-transformers-model
+[4] Save model checkpoint every 3 epochs
+https://simpletransformers.ai/docs/tips-and-tricks/#save-model-checkpoint-every-3-epochs
 '''
 
 def log():
     '''warning 時輸出 log'''
-    # logging.basicConfig(level=logging.INFO)
-    # transformers_logger = logging.getLogger("transformers")
-    # transformers_logger.setLevel(logging.WARNING)
+    logging.basicConfig(level=logging.INFO)
+    transformers_logger = logging.getLogger("transformers")
+    transformers_logger.setLevel(logging.WARNING)
 
     print(f"是否使用 GPU: {torch.cuda.is_available()}")
 
@@ -43,8 +47,8 @@ def train():
 
     '''pre-trained model、batch size 與 epoch'''
     model_name = 'roberta-base'
-    batch_size = 64
-    epoch = 30
+    batch_size = 256
+    epoch = 10
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name}-bs-{batch_size}-ep-{epoch}-cls-model/"
@@ -56,6 +60,8 @@ def train():
     model_args.overwrite_output_dir = True
     model_args.reprocess_input_data = True
     model_args.use_multiprocessing = True
+    model_args.save_model_every_epoch = False
+    model_args.save_steps = -1
     model_args.output_dir = output_dir
 
     '''迴歸分析才需要設定'''
@@ -63,7 +69,7 @@ def train():
     # model_args.regression = True
 
     '''建立 ClassificationModel'''
-    model = ClassificationModel('roberta', model_name, use_cuda=torch.cuda.is_available(), cuda_device=1, args=model_args)
+    model = ClassificationModel('roberta', model_name, use_cuda=torch.cuda.is_available(), cuda_device=0, args=model_args)
 
     '''訓練model'''
     model.train_model(train_df)

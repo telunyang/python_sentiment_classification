@@ -4,19 +4,11 @@ import logging
 import time, pprint, datetime 
 import torch
 
-'''
-訓練參考連結
-[1] Binary Classification
-https://simpletransformers.ai/docs/binary-classification/
-[2] Pretrained models
-https://huggingface.co/transformers/pretrained_models.html
-'''
-
 def log():
     '''warning 時輸出 log'''
-    # logging.basicConfig(level=logging.INFO)
-    # transformers_logger = logging.getLogger("transformers")
-    # transformers_logger.setLevel(logging.WARNING)
+    logging.basicConfig(level=logging.INFO)
+    transformers_logger = logging.getLogger("transformers")
+    transformers_logger.setLevel(logging.WARNING)
 
     print(f"是否使用 GPU: {torch.cuda.is_available()}")
 
@@ -38,8 +30,8 @@ def predict():
     
     '''pre-trained model、batch size 與 epoch'''
     model_name = 'roberta-base'
-    batch_size = 64
-    epoch = 30
+    batch_size = 256
+    epoch = 10
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name}-bs-{batch_size}-ep-{epoch}-cls-model/"
@@ -50,7 +42,9 @@ def predict():
     model_args.num_train_epochs = epoch
     model_args.overwrite_output_dir = True
     model_args.reprocess_input_data = True
-    model_args.use_multiprocessing = False
+    model_args.use_multiprocessing = True
+    model_args.save_model_every_epoch = False
+    model_args.save_steps = -1
     model_args.output_dir = output_dir
 
     '''迴歸分析才需要設定'''
@@ -58,7 +52,12 @@ def predict():
     # model_args.regression = True
 
     '''建立 ClassificationModel'''
-    model = ClassificationModel('roberta', model_name, use_cuda=torch.cuda.is_available(), cuda_device=1, args=model_args)
+    model = ClassificationModel(
+        'roberta', 
+        output_dir, # 這裡跟訓練不同，放的是你訓練好的 model 路徑
+        use_cuda=torch.cuda.is_available(), 
+        cuda_device=0, 
+        args=model_args)
 
     '''預測結果'''
     predictions, raw_outputs = model.predict(test_data)
@@ -72,6 +71,7 @@ def predict():
             list_dataset[index][0],
             sentiment
         ])
+
 
     '''將結果存回 excel'''
     strDataTime = datetime.datetime.today().strftime("%Y%m%d%H%M%S")
