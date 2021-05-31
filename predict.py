@@ -30,7 +30,7 @@ def predict():
     
     '''pre-trained model、batch size 與 epoch'''
     model_name = 'roberta-large'
-    batch_size = 64
+    batch_size = 32
     epoch = 10
 
     '''output 資料夾'''
