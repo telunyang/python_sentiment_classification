@@ -14,9 +14,9 @@ https://huggingface.co/transformers/pretrained_models.html
 
 def log():
     '''warning 時輸出 log'''
-    logging.basicConfig(level=logging.INFO)
-    transformers_logger = logging.getLogger("transformers")
-    transformers_logger.setLevel(logging.WARNING)
+    # logging.basicConfig(level=logging.INFO)
+    # transformers_logger = logging.getLogger("transformers")
+    # transformers_logger.setLevel(logging.WARNING)
 
     print(f"是否使用 GPU: {torch.cuda.is_available()}")
 
@@ -44,7 +44,7 @@ def train():
     '''pre-trained model、batch size 與 epoch'''
     model_name = 'roberta-base'
     batch_size = 64
-    epoch = 20
+    epoch = 10
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name}-bs-{batch_size}-ep-{epoch}-cls-model/"
@@ -75,25 +75,27 @@ def train():
     print("[Train] It cost %f sec" % (tEndTrain - tStartTrain))
 
 
-    # 評估
-    '''評估資料'''
-    eval_csv = pd.read_csv('train.csv')
 
-    '''放置符合評估格式的資料'''
-    eval_data = []
+    # # 評估
+    # '''評估資料'''
+    # eval_csv = pd.read_csv('train.csv')
 
-    '''資料轉換'''
-    list_eval_dataset = eval_csv.values.tolist()
-    for dataset in list_eval_dataset:
-        eval_data.append([dataset[1], dataset[2]])
+    # '''放置符合評估格式的資料'''
+    # eval_data = []
 
-    '''轉成 data frame 後，給序欄位名稱'''
-    eval_df = pd.DataFrame(eval_data)
-    eval_df.columns = ["text", "labels"]
+    # '''資料轉換'''
+    # list_eval_dataset = eval_csv.values.tolist()
+    # for dataset in list_eval_dataset:
+    #     eval_data.append([dataset[1], dataset[2]])
 
-    '''評估模型'''
-    result, model_outputs, wrong_predictions = model.eval_model(eval_df) 
-    print(f"result: {result}, model_outputs: {model_outputs}, wrong_predictions: {wrong_predictions}")
+    # '''轉成 data frame 後，給序欄位名稱'''
+    # eval_df = pd.DataFrame(eval_data)
+    # eval_df.columns = ["text", "labels"]
+
+    # '''評估模型'''
+    # result, model_outputs, wrong_predictions = model.eval_model(eval_df) 
+    # print(f"result: {result}, model_outputs: {model_outputs}, wrong_predictions: {wrong_predictions}")
+
 
 
     # 預測

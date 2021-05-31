@@ -14,9 +14,9 @@ https://huggingface.co/transformers/pretrained_models.html
 
 def log():
     '''warning 時輸出 log'''
-    logging.basicConfig(level=logging.INFO)
-    transformers_logger = logging.getLogger("transformers")
-    transformers_logger.setLevel(logging.WARNING)
+    # logging.basicConfig(level=logging.INFO)
+    # transformers_logger = logging.getLogger("transformers")
+    # transformers_logger.setLevel(logging.WARNING)
 
     print(f"是否使用 GPU: {torch.cuda.is_available()}")
 
@@ -39,7 +39,7 @@ def predict():
     '''pre-trained model、batch size 與 epoch'''
     model_name = 'roberta-base'
     batch_size = 64
-    epoch = 20
+    epoch = 10
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name}-bs-{batch_size}-ep-{epoch}-cls-model/"
