@@ -46,7 +46,7 @@ def train():
     train_df.columns = ["text", "labels"]
 
     '''pre-trained model、batch size 與 epoch'''
-    model_name = 'roberta-base'
+    model_name = 'roberta-large'
     batch_size = 128
     epoch = 10
 
