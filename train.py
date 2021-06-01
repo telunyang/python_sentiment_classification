@@ -3,6 +3,7 @@ import pandas as pd
 import logging
 import time, pprint
 import torch
+import random
 
 '''
 訓練參考連結
@@ -26,7 +27,6 @@ def log():
 
 def train():
     # 訓練
-
     '''計時開始 - 訓練'''
     tStartTrain = time.time() 
 
@@ -48,7 +48,7 @@ def train():
     '''pre-trained model、batch size 與 epoch'''
     model_name = 'roberta-large'
     batch_size = 32
-    epoch = 30
+    epoch = 10
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name}-bs-{batch_size}-ep-{epoch}-cls-model/"
@@ -83,8 +83,14 @@ def train():
 
 
     # # 評估
-    # '''評估資料'''
-    # eval_csv = pd.read_csv('train.csv')
+    # '''
+    # 評估資料，從訓練資料集中提取部分資料，
+    # 例如 20000 筆，其中 15000 筆
+    # '''
+    # # eval_csv = pd.read_csv('train.csv')
+    # list_tmp = list_dataset
+    # random.shuffle(list_tmp)
+
 
     # '''放置符合評估格式的資料'''
     # eval_data = []
@@ -105,7 +111,6 @@ def train():
 
 
     # 預測
-
     '''計時開始 - 預測'''
     tStartPredict = time.time() 
 
