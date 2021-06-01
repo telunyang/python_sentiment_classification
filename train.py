@@ -48,7 +48,7 @@ def train():
     '''pre-trained model、batch size 與 epoch'''
     model_name = 'roberta-large'
     batch_size = 32
-    epoch = 10
+    epoch = 5
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name}-bs-{batch_size}-ep-{epoch}-cls-model/"
