@@ -51,7 +51,7 @@ def train():
     model_name_main = 'deberta-large'
     model_name = model_name_prefix + model_name_main
     batch_size = 32
-    epoch = 10
+    epoch = 5
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
