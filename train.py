@@ -50,7 +50,7 @@ def train():
     model_name_prefix = 'microsoft/'
     model_name_main = 'deberta-large'
     model_name = model_name_prefix + model_name_main
-    batch_size = 64
+    batch_size = 32
     epoch = 30
 
     '''output 資料夾'''
@@ -62,7 +62,7 @@ def train():
     model_args.num_train_epochs = epoch
     model_args.overwrite_output_dir = True
     model_args.reprocess_input_data = True
-    model_args.use_multiprocessing = False
+    model_args.use_multiprocessing = True
     model_args.save_model_every_epoch = False
     model_args.save_steps = -1
     model_args.output_dir = output_dir
