@@ -46,9 +46,10 @@ def train():
     train_df.columns = ["text", "labels"]
 
     '''pre-trained model、batch size 與 epoch'''
-    model_name = 'roberta-large'
+    model = 'deberta'
+    model_name = 'deberta-v2-xxlarge'
     batch_size = 32
-    epoch = 5
+    epoch = 30
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name}-bs-{batch_size}-ep-{epoch}-cls-model/"
@@ -69,7 +70,7 @@ def train():
     # model_args.regression = True
 
     '''建立 ClassificationModel'''
-    model = ClassificationModel('roberta', model_name, use_cuda=torch.cuda.is_available(), cuda_device=0, args=model_args)
+    model = ClassificationModel(model, model_name, use_cuda=torch.cuda.is_available(), cuda_device=0, args=model_args)
 
     '''訓練model'''
     model.train_model(train_df)
