@@ -29,12 +29,15 @@ def predict():
         test_data.append(dataset[1])
     
     '''pre-trained model、batch size 與 epoch'''
-    model_name = 'roberta-large'
+    model = 'deberta'
+    model_name_prefix = 'microsoft/'
+    model_name_main = 'deberta-large'
+    model_name = model_name_prefix + model_name_main
     batch_size = 32
     epoch = 5
 
     '''output 資料夾'''
-    output_dir = f"outputs/{model_name}-bs-{batch_size}-ep-{epoch}-cls-model/"
+    output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
 
     '''自訂參數'''
     model_args = ClassificationArgs()
@@ -52,12 +55,7 @@ def predict():
     # model_args.regression = True
 
     '''建立 ClassificationModel'''
-    model = ClassificationModel(
-        'roberta', 
-        output_dir, # 這裡跟訓練不同，放的是你訓練好的 model 路徑
-        use_cuda=torch.cuda.is_available(), 
-        cuda_device=0, 
-        args=model_args)
+    model = ClassificationModel(model, model_name, use_cuda=torch.cuda.is_available(), cuda_device=1, args=model_args)
 
     '''預測結果'''
     predictions, raw_outputs = model.predict(test_data)
