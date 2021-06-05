@@ -47,7 +47,7 @@ def train():
 
     '''pre-trained model、batch size 與 epoch'''
     model = 'deberta'
-    model_name = 'deberta-v2-xxlarge'
+    model_name = 'microsoft/deberta-v2-xxlarge'
     batch_size = 32
     epoch = 30
 
