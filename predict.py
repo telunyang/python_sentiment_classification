@@ -31,7 +31,7 @@ def predict():
     '''pre-trained model、batch size 與 epoch'''
     model = 'deberta'
     model_name_prefix = 'microsoft/'
-    model_name_main = 'deberta-large'
+    model_name_main = 'deberta-base'
     model_name = model_name_prefix + model_name_main
     batch_size = 32
     epoch = 5
