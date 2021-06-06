@@ -31,7 +31,7 @@ def predict():
     '''pre-trained model、batch size 與 epoch'''
     model = 'deberta'
     model_name_prefix = 'microsoft/'
-    model_name_main = 'deberta-base'
+    model_name_main = 'deberta-large'
     model_name = model_name_prefix + model_name_main
     batch_size = 32
     epoch = 5
@@ -55,7 +55,7 @@ def predict():
     # model_args.regression = True
 
     '''建立 ClassificationModel'''
-    model = ClassificationModel(model, model_name, use_cuda=torch.cuda.is_available(), cuda_device=1, args=model_args)
+    model = ClassificationModel(model, output_dir, use_cuda=torch.cuda.is_available(), cuda_device=0, args=model_args)
 
     '''預測結果'''
     predictions, raw_outputs = model.predict(test_data)
