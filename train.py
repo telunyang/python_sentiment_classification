@@ -31,27 +31,36 @@ def train():
     tStartTrain = time.time() 
 
     '''訓練資料'''
-    train_csv = pd.read_csv('train.csv')
+    train_aidea_csv = pd.read_csv('train.csv')
 
     '''放置符合訓練格式的資料'''
     train_data = []
 
     '''資料轉換'''
-    list_dataset = train_csv.values.tolist()
-    for dataset in list_dataset:
+    list_dataset_train_aidea = train_aidea_csv.values.tolist()
+    for dataset in list_dataset_train_aidea:
         train_data.append([dataset[1], dataset[2]])
+
+    '''2021.06.07 讀取 Yelp reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
+    train_yelp_csv = pd.read_csv('train_yelp.csv', names=['sentiment', 'review'])
+    train_yelp_csv.loc[train_yelp_csv.sentiment == 1, 'sentiment'] = 0
+    train_yelp_csv.loc[train_yelp_csv.sentiment == 2, 'sentiment'] = 1
+
+    list_dataset_train_yelp = train_yelp_csv.values.tolist()
+    for dataset in list_dataset_train_yelp:
+        train_data.append([dataset[1], dataset[0]])
 
     '''轉成 data frame 後，給序欄位名稱'''
     train_df = pd.DataFrame(train_data)
     train_df.columns = ["text", "labels"]
 
     '''pre-trained model、batch size 與 epoch'''
-    model = 'deberta'
-    model_name_prefix = 'microsoft/'
-    model_name_main = 'deberta-xxlarge-v2'
+    model = 'roberta'
+    model_name_prefix = ''
+    model_name_main = 'roberta-large'
     model_name = model_name_prefix + model_name_main
     batch_size = 32
-    epoch = 10
+    epoch = 5
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
