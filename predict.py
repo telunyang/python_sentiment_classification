@@ -30,9 +30,9 @@ def predict():
     
     '''pre-trained model、batch size 與 epoch'''
     model = 'deberta'
-    model_name_main = 'deberta-large'
+    model_name_main = 'deberta-xxlarge-v2'
     batch_size = 32
-    epoch = 5
+    epoch = 10
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
