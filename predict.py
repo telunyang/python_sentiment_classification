@@ -72,10 +72,10 @@ def predict():
 
 
     '''將結果存回 excel'''
-    strDataTime = datetime.datetime.today().strftime("%Y%m%d%H%M%S")
+    # strDataTime = datetime.datetime.today().strftime("%Y%m%d%H%M%S")
     result_df = pd.DataFrame(list_result)
     result_df.columns = ["ID", "sentiment"]
-    result_df.to_csv(f"{strDataTime}.csv", index=False)
+    result_df.to_csv(f"{model_name_main}-bs-{batch_size}-ep-{epoch}.csv", index=False)
 
     '''計時結束'''
     tEnd = time.time()
