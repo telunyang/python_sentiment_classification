@@ -57,6 +57,12 @@ def train():
     for dataset in list_dataset_train_imdb:
         train_data.append([dataset[0], dataset[1]])
 
+    '''2021.06.07 讀取 Bag of Words Meets Bags of Popcorn 的 movie reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
+    train_bowmbop_csv = pd.read_csv('train_bowmbop.tsv', sep = '\t')
+    list_dataset_train_bowmbop = train_bowmbop_csv.values.tolist()
+    for dataset in list_dataset_train_bowmbop:
+        train_data.append([dataset[2], dataset[1]])
+
     '''轉成 data frame 後，給序欄位名稱'''
     train_df = pd.DataFrame(train_data)
     train_df.columns = ["text", "labels"]
