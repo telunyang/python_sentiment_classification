@@ -3,6 +3,8 @@ archived_csv/
 cache_dir/
 runs/
 
+aclimdb/
+
 test.py
 
 *.csv
