@@ -84,7 +84,7 @@ def train():
     model_args.num_train_epochs = epoch
     model_args.overwrite_output_dir = True
     model_args.reprocess_input_data = True
-    model_args.use_multiprocessing = False
+    model_args.use_multiprocessing = True
     model_args.save_model_every_epoch = False
     model_args.save_steps = -1
     model_args.output_dir = output_dir
