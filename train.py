@@ -94,7 +94,7 @@ def train():
     # model_args.regression = True
 
     '''建立 ClassificationModel'''
-    model = ClassificationModel(model, model_name, use_cuda=torch.cuda.is_available(), cuda_device=1, args=model_args)
+    model = ClassificationModel(model, model_name, use_cuda=torch.cuda.is_available(), cuda_device=0, args=model_args)
 
     '''訓練model'''
     model.train_model(train_df)
