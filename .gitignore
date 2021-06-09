@@ -6,6 +6,7 @@ runs/
 aclimdb/
 
 test.py
+aclimdb.tar
 
 *.csv
 *.tsv
