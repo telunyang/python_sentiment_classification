@@ -73,7 +73,7 @@ def train():
     model_name_main = 'roberta-large'
     model_name = model_name_prefix + model_name_main
     batch_size = 64
-    epoch = 5
+    epoch = 10
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
