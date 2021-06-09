@@ -1,9 +1,8 @@
 from simpletransformers.classification import ClassificationModel, ClassificationArgs
 import pandas as pd
 import logging
-import time, pprint
+import time, pathlib
 import torch
-import random
 
 '''
 訓練參考連結
@@ -63,6 +62,28 @@ def train():
     for dataset in list_dataset_train_bowmbop:
         train_data.append([dataset[2], dataset[1]])
 
+    '''2021.06.10 讀取 Large Movie Review Dataset 25000 筆訓練資料以及 25000 筆有分類過的測試資料'''
+    for path in pathlib.Path("aclimdb/train/pos").iterdir():
+        if path.is_file():
+            current_file = open(path, "r", encoding="utf-8")
+            train_data.append([current_file.read(), 1])
+            current_file.close()
+    for path in pathlib.Path("aclimdb/train/neg").iterdir():
+        if path.is_file():
+            current_file = open(path, "r", encoding="utf-8")
+            train_data.append([current_file.read(), 0])
+            current_file.close()
+    for path in pathlib.Path("aclimdb/test/pos").iterdir():
+        if path.is_file():
+            current_file = open(path, "r", encoding="utf-8")
+            train_data.append([current_file.read(), 1])
+            current_file.close()
+    for path in pathlib.Path("aclimdb/test/neg").iterdir():
+        if path.is_file():
+            current_file = open(path, "r", encoding="utf-8")
+            train_data.append([current_file.read(), 0])
+            current_file.close()
+
     '''轉成 data frame 後，給序欄位名稱'''
     train_df = pd.DataFrame(train_data)
     train_df.columns = ["text", "labels"]
@@ -73,7 +94,7 @@ def train():
     model_name_main = 'roberta-large'
     model_name = model_name_prefix + model_name_main
     batch_size = 64
-    epoch = 10
+    epoch = 5
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
