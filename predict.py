@@ -31,7 +31,7 @@ def predict():
     '''pre-trained model、batch size 與 epoch'''
     model = 'roberta'
     model_name_main = 'roberta-large'
-    batch_size = 16
+    batch_size = 256
     epoch = 10
 
     '''output 資料夾'''
@@ -43,7 +43,7 @@ def predict():
     model_args.num_train_epochs = epoch
     model_args.overwrite_output_dir = True
     model_args.reprocess_input_data = True
-    model_args.use_multiprocessing = False
+    model_args.use_multiprocessing = True
     model_args.save_model_every_epoch = False
     model_args.save_steps = -1
     model_args.output_dir = output_dir
