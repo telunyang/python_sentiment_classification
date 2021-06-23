@@ -40,49 +40,49 @@ def train():
     for dataset in list_dataset_train_aidea:
         train_data.append([dataset[1], dataset[2]])
 
-    # '''2021.06.07 讀取 Yelp reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
-    # train_yelp_csv = pd.read_csv('train_yelp.csv', names=['sentiment', 'review'])
-    # train_yelp_csv.loc[train_yelp_csv.sentiment == 1, 'sentiment'] = 0
-    # train_yelp_csv.loc[train_yelp_csv.sentiment == 2, 'sentiment'] = 1
-    # list_dataset_train_yelp = train_yelp_csv.values.tolist()
-    # for dataset in list_dataset_train_yelp:
-    #     train_data.append([dataset[1], dataset[0]])
+    '''2021.06.07 讀取 Yelp reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
+    train_yelp_csv = pd.read_csv('train_yelp.csv', names=['sentiment', 'review'])
+    train_yelp_csv.loc[train_yelp_csv.sentiment == 1, 'sentiment'] = 0
+    train_yelp_csv.loc[train_yelp_csv.sentiment == 2, 'sentiment'] = 1
+    list_dataset_train_yelp = train_yelp_csv.values.tolist()
+    for dataset in list_dataset_train_yelp:
+        train_data.append([dataset[1], dataset[0]])
 
-    # '''2021.06.07 讀取 IMDB movie reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
-    # train_imdb_csv = pd.read_csv('train_imdb.csv')
-    # train_imdb_csv.loc[train_imdb_csv.sentiment == 'negative', 'sentiment'] = 0
-    # train_imdb_csv.loc[train_imdb_csv.sentiment == 'positive', 'sentiment'] = 1
-    # list_dataset_train_imdb = train_imdb_csv.values.tolist()
-    # for dataset in list_dataset_train_imdb:
-    #     train_data.append([dataset[0], dataset[1]])
+    '''2021.06.07 讀取 IMDB movie reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
+    train_imdb_csv = pd.read_csv('train_imdb.csv')
+    train_imdb_csv.loc[train_imdb_csv.sentiment == 'negative', 'sentiment'] = 0
+    train_imdb_csv.loc[train_imdb_csv.sentiment == 'positive', 'sentiment'] = 1
+    list_dataset_train_imdb = train_imdb_csv.values.tolist()
+    for dataset in list_dataset_train_imdb:
+        train_data.append([dataset[0], dataset[1]])
 
-    # '''2021.06.07 讀取 Bag of Words Meets Bags of Popcorn 的 movie reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
-    # train_bowmbop_csv = pd.read_csv('train_bowmbop.tsv', sep = '\t')
-    # list_dataset_train_bowmbop = train_bowmbop_csv.values.tolist()
-    # for dataset in list_dataset_train_bowmbop:
-    #     train_data.append([dataset[2], dataset[1]])
+    '''2021.06.07 讀取 Bag of Words Meets Bags of Popcorn 的 movie reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
+    train_bowmbop_csv = pd.read_csv('train_bowmbop.tsv', sep = '\t')
+    list_dataset_train_bowmbop = train_bowmbop_csv.values.tolist()
+    for dataset in list_dataset_train_bowmbop:
+        train_data.append([dataset[2], dataset[1]])
 
-    # '''2021.06.10 讀取 Large Movie Review Dataset 25000 筆訓練資料以及 25000 筆有分類過的測試資料'''
-    # for path in pathlib.Path("aclimdb/train/pos").iterdir():
-    #     if path.is_file():
-    #         current_file = open(path, "r", encoding="utf-8")
-    #         train_data.append([current_file.read(), 1])
-    #         current_file.close()
-    # for path in pathlib.Path("aclimdb/train/neg").iterdir():
-    #     if path.is_file():
-    #         current_file = open(path, "r", encoding="utf-8")
-    #         train_data.append([current_file.read(), 0])
-    #         current_file.close()
-    # for path in pathlib.Path("aclimdb/test/pos").iterdir():
-    #     if path.is_file():
-    #         current_file = open(path, "r", encoding="utf-8")
-    #         train_data.append([current_file.read(), 1])
-    #         current_file.close()
-    # for path in pathlib.Path("aclimdb/test/neg").iterdir():
-    #     if path.is_file():
-    #         current_file = open(path, "r", encoding="utf-8")
-    #         train_data.append([current_file.read(), 0])
-    #         current_file.close()
+    '''2021.06.10 讀取 Large Movie Review Dataset 25000 筆訓練資料以及 25000 筆有分類過的測試資料'''
+    for path in pathlib.Path("aclimdb/train/pos").iterdir():
+        if path.is_file():
+            current_file = open(path, "r", encoding="utf-8")
+            train_data.append([current_file.read(), 1])
+            current_file.close()
+    for path in pathlib.Path("aclimdb/train/neg").iterdir():
+        if path.is_file():
+            current_file = open(path, "r", encoding="utf-8")
+            train_data.append([current_file.read(), 0])
+            current_file.close()
+    for path in pathlib.Path("aclimdb/test/pos").iterdir():
+        if path.is_file():
+            current_file = open(path, "r", encoding="utf-8")
+            train_data.append([current_file.read(), 1])
+            current_file.close()
+    for path in pathlib.Path("aclimdb/test/neg").iterdir():
+        if path.is_file():
+            current_file = open(path, "r", encoding="utf-8")
+            train_data.append([current_file.read(), 0])
+            current_file.close()
 
     '''轉成 data frame 後，給序欄位名稱'''
     train_df = pd.DataFrame(train_data)
@@ -91,10 +91,10 @@ def train():
     '''pre-trained model、batch size 與 epoch'''
     model = 'roberta'
     model_name_prefix = ''
-    model_name_main = 'roberta-base'
+    model_name_main = 'roberta-large'
     model_name = model_name_prefix + model_name_main
     batch_size = 4
-    epoch = 5
+    epoch = 30
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
@@ -106,7 +106,7 @@ def train():
     model_args.overwrite_output_dir = True
     model_args.reprocess_input_data = True
     model_args.use_multiprocessing = True
-    model_args.save_model_every_epoch = False
+    model_args.save_model_every_epoch = True
     model_args.save_steps = -1
     model_args.output_dir = output_dir
 
