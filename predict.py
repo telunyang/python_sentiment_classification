@@ -32,10 +32,11 @@ def predict():
     model = 'roberta'
     model_name_main = 'roberta-large'
     batch_size = 4
-    epoch = 8
+    epoch = 5
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
+    # output_dir = f'outputs/checkpoint-347274-epoch-9/'
 
     '''自訂參數'''
     model_args = ClassificationArgs()
@@ -43,8 +44,8 @@ def predict():
     model_args.num_train_epochs = epoch
     model_args.overwrite_output_dir = True
     model_args.reprocess_input_data = True
-    model_args.use_multiprocessing = False
-    model_args.save_model_every_epoch = False
+    model_args.use_multiprocessing = True
+    model_args.save_model_every_epoch = True
     model_args.save_steps = -1
     model_args.output_dir = output_dir
 
