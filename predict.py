@@ -32,7 +32,7 @@ def predict():
     model = 'roberta'
     model_name_main = 'roberta-base'
     batch_size = 4
-    epoch = 5
+    epoch = 5 
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
