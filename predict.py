@@ -9,9 +9,7 @@ def log():
     logging.basicConfig(level=logging.INFO)
     transformers_logger = logging.getLogger("transformers")
     transformers_logger.setLevel(logging.WARNING)
-
     print(f"是否使用 GPU: {torch.cuda.is_available()}")
-
 
 def predict():
     '''計時開始'''
@@ -35,8 +33,9 @@ def predict():
     epoch = 15 
 
     '''output 資料夾'''
-    output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
-    # output_dir = f'outputs/checkpoint-347274-epoch-9/'
+    output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/checkpoint-19299-epoch-7/"
+    # checkpoint-27570-epoch-10
+    # checkpoint-19299-epoch-7/
 
     '''自訂參數'''
     model_args = ClassificationArgs()
@@ -68,7 +67,6 @@ def predict():
             list_dataset[index][0],
             sentiment
         ])
-
 
     '''將結果存回 excel'''
     # strDataTime = datetime.datetime.today().strftime("%Y%m%d%H%M%S")
