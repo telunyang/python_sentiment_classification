@@ -34,15 +34,15 @@
 
 ## 沒有 GPU 的安裝流程
 請上 google colab 使用免費的方案，勿超過額度。如果還是沒有辦法使用 GPU，沒關係，我們可以使用 CPU 來訓練，只是會比較久…按照下列步驟安裝:
-- 1. 一樣透過 conda 安裝 st 環境:
+1. 一樣透過 conda 安裝 st 環境
   ```conda create -n st python=3.8 pandas tqdm```
-- 2. 切換到 conda 環境 st:
+2. 切換到 conda 環境 st
   ```conda activate st```
-- 3. 直接安裝 PyTorch CPU Only 版本:
+3. 直接安裝 PyTorch CPU Only 版本
   ```pip install torch==1.8.0+cpu torchvision==0.9.0+cpu torchaudio==0.8.0 -f https://download.pytorch.org/whl/torch_stable.html```
-- 4. 安裝 simple transformers
+4. 安裝 simple transformers
   ```pip install simpletransformers```
-- 5. 訓練和預測參數都將 use_cuda 設為 False 
+5. 訓練和預測參數都將 use_cuda 設為 **False**
 
 ## 雲端硬碟下載 CUDA 11.0 + CUDNN 11.0 for Windows 10 (之後可能會刪除):
   - [windows10_cuda110_cudnn110](https://reurl.cc/0jdmml "window10_cuda110_cudnn110")
