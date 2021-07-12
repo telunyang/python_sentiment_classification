@@ -30,10 +30,10 @@ def predict():
     model = 'roberta'
     model_name_main = 'roberta-base'
     batch_size = 56
-    epoch = 15 
+    epoch = 8 
 
     '''output 資料夾'''
-    output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/checkpoint-41355-epoch-15/"
+    output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
     # checkpoint-41355-epoch-15/
     # checkpoint-27570-epoch-10/
     # checkpoint-19299-epoch-7/

@@ -84,6 +84,14 @@ def train():
             train_data.append([current_file.read(), 0])
             current_file.close()
 
+    '''2021.07.12 讀取 NLTK Data 的 movie reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
+    train_nltk_csv = pd.read_csv('train_nltk.csv')
+    train_nltk_csv.loc[train_nltk_csv.tag == 'neg', 'tag'] = 0
+    train_nltk_csv.loc[train_nltk_csv.tag == 'pos', 'tag'] = 1
+    list_dataset_train_nltk = train_nltk_csv.values.tolist()
+    for dataset in list_dataset_train_nltk:
+        train_data.append([dataset[4], dataset[5]])
+
     '''轉成 data frame 後，給序欄位名稱'''
     train_df = pd.DataFrame(train_data)
     train_df.columns = ["text", "labels"]
@@ -94,7 +102,7 @@ def train():
     model_name_main = 'roberta-base'
     model_name = model_name_prefix + model_name_main
     batch_size = 56
-    epoch = 15 
+    epoch = 8 
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
@@ -106,7 +114,7 @@ def train():
     model_args.overwrite_output_dir = True
     model_args.reprocess_input_data = True
     model_args.use_multiprocessing = True
-    model_args.save_model_every_epoch = True
+    model_args.save_model_every_epoch = False
     model_args.save_steps = -1
     model_args.output_dir = output_dir
 
