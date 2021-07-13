@@ -4,6 +4,7 @@ cache_dir/
 runs/
 
 aclimdb/
+rt-*
 
 test.py
 aclimdb.tar
