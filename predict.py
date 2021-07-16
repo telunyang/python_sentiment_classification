@@ -47,7 +47,7 @@ def predict():
     model_args.use_multiprocessing = True
     model_args.save_model_every_epoch = True
     model_args.save_steps = -1
-    model_args.learning_rate = 4e-3
+    model_args.learning_rate = 1e-2
     model_args.output_dir = output_dir
 
     '''迴歸分析才需要設定'''
