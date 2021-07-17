@@ -1,7 +1,7 @@
 from simpletransformers.classification import ClassificationModel, ClassificationArgs
 import pandas as pd
 import logging
-import time, pathlib
+import time, pathlib, random
 import torch
 
 '''
@@ -110,6 +110,11 @@ def train():
         if text != '':
             train_data.append([text, 0])
 
+    '''隨機排序訓練資料'''
+    random.shuffle(train_data)
+    random.shuffle(train_data)
+    random.shuffle(train_data)
+
     '''轉成 data frame 後，給序欄位名稱'''
     train_df = pd.DataFrame(train_data)
     train_df.columns = ["text", "labels"]
@@ -134,7 +139,7 @@ def train():
     model_args.use_multiprocessing = True
     model_args.save_model_every_epoch = True
     model_args.save_steps = -1
-    model_args.learning_rate = 4e-2
+    model_args.learning_rate = 8e-5
     model_args.output_dir = output_dir
 
     '''迴歸分析才需要設定'''
