@@ -120,7 +120,7 @@ def train():
     train_df.columns = ["text", "labels"]
 
     '''pre-trained model、batch size 與 epoch'''
-    model = 'DeBERTa'
+    model = 'deberta'
     model_name_prefix = 'microsoft/'
     model_name_main = 'deberta-base'
     model_name = model_name_prefix + model_name_main
@@ -147,7 +147,7 @@ def train():
     # model_args.regression = True
 
     '''建立 ClassificationModel'''
-    model = ClassificationModel(model, model_name, use_cuda=torch.cuda.is_available(), cuda_device=0, args=model_args)
+    model = ClassificationModel('deberta', model_name, use_cuda=torch.cuda.is_available(), cuda_device=0, args=model_args)
 
     '''訓練model'''
     model.train_model(train_df)
