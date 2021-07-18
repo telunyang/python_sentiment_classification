@@ -124,8 +124,8 @@ def train():
     model_name_prefix = ''
     model_name_main = 'roberta-base'
     model_name = model_name_prefix + model_name_main
-    batch_size = 57
-    epoch = 10
+    batch_size = 58
+    epoch = 15
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
@@ -139,7 +139,7 @@ def train():
     model_args.use_multiprocessing = True
     model_args.save_model_every_epoch = True
     model_args.save_steps = -1
-    model_args.learning_rate = 2e-5
+    model_args.learning_rate = 4e-6
     model_args.output_dir = output_dir
 
     '''迴歸分析才需要設定'''
