@@ -120,7 +120,7 @@ def train():
     train_df.columns = ["text", "labels"]
 
     '''pre-trained model、batch size 與 epoch'''
-    model = 'deberta'
+    model = 'DeBERTa'
     model_name_prefix = 'microsoft/'
     model_name_main = 'deberta-base'
     model_name = model_name_prefix + model_name_main
