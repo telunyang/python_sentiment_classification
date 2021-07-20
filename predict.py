@@ -31,7 +31,7 @@ def predict():
     model_name_prefix = 'microsoft/'
     model_name_main = 'deberta-large'
     model_name = model_name_prefix + model_name_main
-    batch_size = 4
+    batch_size = 2
     epoch = 10
 
     '''output 資料夾'''
@@ -44,8 +44,8 @@ def predict():
     model_args = ClassificationArgs()
     model_args.train_batch_size = batch_size
     model_args.num_train_epochs = epoch
-    model_args.overwrite_output_dir = True
-    model_args.reprocess_input_data = True
+    model_args.overwrite_output_dir = False
+    model_args.reprocess_input_data = False
     model_args.use_multiprocessing = True
     model_args.save_model_every_epoch = True
     model_args.save_steps = -1
