@@ -63,26 +63,26 @@ def train():
         train_data.append([dataset[2], dataset[1]])
 
     '''2021.06.10 讀取 Large Movie Review Dataset 25000 筆訓練資料以及 25000 筆有分類過的測試資料'''
-    for path in pathlib.Path("aclimdb/train/pos").iterdir():
-        if path.is_file():
-            current_file = open(path, "r", encoding="utf-8")
-            train_data.append([current_file.read(), 1])
-            current_file.close()
-    for path in pathlib.Path("aclimdb/train/neg").iterdir():
-        if path.is_file():
-            current_file = open(path, "r", encoding="utf-8")
-            train_data.append([current_file.read(), 0])
-            current_file.close()
-    for path in pathlib.Path("aclimdb/test/pos").iterdir():
-        if path.is_file():
-            current_file = open(path, "r", encoding="utf-8")
-            train_data.append([current_file.read(), 1])
-            current_file.close()
-    for path in pathlib.Path("aclimdb/test/neg").iterdir():
-        if path.is_file():
-            current_file = open(path, "r", encoding="utf-8")
-            train_data.append([current_file.read(), 0])
-            current_file.close()
+    # for path in pathlib.Path("aclimdb/train/pos").iterdir():
+    #     if path.is_file():
+    #         current_file = open(path, "r", encoding="utf-8")
+    #         train_data.append([current_file.read(), 1])
+    #         current_file.close()
+    # for path in pathlib.Path("aclimdb/train/neg").iterdir():
+    #     if path.is_file():
+    #         current_file = open(path, "r", encoding="utf-8")
+    #         train_data.append([current_file.read(), 0])
+    #         current_file.close()
+    # for path in pathlib.Path("aclimdb/test/pos").iterdir():
+    #     if path.is_file():
+    #         current_file = open(path, "r", encoding="utf-8")
+    #         train_data.append([current_file.read(), 1])
+    #         current_file.close()
+    # for path in pathlib.Path("aclimdb/test/neg").iterdir():
+    #     if path.is_file():
+    #         current_file = open(path, "r", encoding="utf-8")
+    #         train_data.append([current_file.read(), 0])
+    #         current_file.close()
 
     '''2021.07.12 讀取 NLTK Data 的 movie reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
     train_nltk_csv = pd.read_csv('train_nltk.csv')
@@ -92,23 +92,23 @@ def train():
     for dataset in list_dataset_train_nltk:
         train_data.append([dataset[4], dataset[5]])
 
-    '''2021.07.12 讀取 sentence polarity dataset v1.0 的 movie reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
-    fp = open("rt-polaritydata/rt-polarity.pos", "r", encoding="latin-1")
-    strTmp = fp.read()
-    fp.close()
-    strTmp = strTmp.encode('utf-8')
-    listPos = strTmp.decode().split("\n")
-    for text in listPos:
-        if text != '':
-            train_data.append([text, 1])
-    fp = open("rt-polaritydata/rt-polarity.neg", "r", encoding="latin-1")
-    strTmp = fp.read()
-    fp.close()
-    strTmp = strTmp.encode('utf-8')
-    listNeg = strTmp.decode().split("\n")
-    for text in listNeg:
-        if text != '':
-            train_data.append([text, 0])
+    # '''2021.07.12 讀取 sentence polarity dataset v1.0 的 movie reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
+    # fp = open("rt-polaritydata/rt-polarity.pos", "r", encoding="latin-1")
+    # strTmp = fp.read()
+    # fp.close()
+    # strTmp = strTmp.encode('utf-8')
+    # listPos = strTmp.decode().split("\n")
+    # for text in listPos:
+    #     if text != '':
+    #         train_data.append([text, 1])
+    # fp = open("rt-polaritydata/rt-polarity.neg", "r", encoding="latin-1")
+    # strTmp = fp.read()
+    # fp.close()
+    # strTmp = strTmp.encode('utf-8')
+    # listNeg = strTmp.decode().split("\n")
+    # for text in listNeg:
+    #     if text != '':
+    #         train_data.append([text, 0])
 
     '''隨機排序訓練資料'''
     random.shuffle(train_data)
@@ -124,8 +124,8 @@ def train():
     model_name_prefix = 'microsoft/'
     model_name_main = 'deberta-base'
     model_name = model_name_prefix + model_name_main
-    batch_size = 57
-    epoch = 5
+    batch_size = 32
+    epoch = 10
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
@@ -147,7 +147,7 @@ def train():
     # model_args.regression = True
 
     '''建立 ClassificationModel'''
-    model = ClassificationModel('deberta', model_name, use_cuda=torch.cuda.is_available(), cuda_device=0, args=model_args)
+    model = ClassificationModel(model, model_name, use_cuda=torch.cuda.is_available(), cuda_device=0, args=model_args)
 
     '''訓練model'''
     model.train_model(train_df)
