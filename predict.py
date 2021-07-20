@@ -29,9 +29,9 @@ def predict():
     '''pre-trained model、batch size 與 epoch'''
     model = 'deberta'
     model_name_prefix = 'microsoft/'
-    model_name_main = 'deberta-base'
+    model_name_main = 'deberta-large'
     model_name = model_name_prefix + model_name_main
-    batch_size = 37
+    batch_size = 4
     epoch = 10
 
     '''output 資料夾'''
@@ -49,7 +49,7 @@ def predict():
     model_args.use_multiprocessing = True
     model_args.save_model_every_epoch = True
     model_args.save_steps = -1
-    model_args.learning_rate = 4e-5
+    # model_args.learning_rate = 4e-5
     model_args.output_dir = output_dir
 
     '''迴歸分析才需要設定'''

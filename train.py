@@ -63,26 +63,26 @@ def train():
         train_data.append([dataset[2], dataset[1]])
 
     '''2021.06.10 讀取 Large Movie Review Dataset 25000 筆訓練資料以及 25000 筆有分類過的測試資料'''
-    # for path in pathlib.Path("aclimdb/train/pos").iterdir():
-    #     if path.is_file():
-    #         current_file = open(path, "r", encoding="utf-8")
-    #         train_data.append([current_file.read(), 1])
-    #         current_file.close()
-    # for path in pathlib.Path("aclimdb/train/neg").iterdir():
-    #     if path.is_file():
-    #         current_file = open(path, "r", encoding="utf-8")
-    #         train_data.append([current_file.read(), 0])
-    #         current_file.close()
-    # for path in pathlib.Path("aclimdb/test/pos").iterdir():
-    #     if path.is_file():
-    #         current_file = open(path, "r", encoding="utf-8")
-    #         train_data.append([current_file.read(), 1])
-    #         current_file.close()
-    # for path in pathlib.Path("aclimdb/test/neg").iterdir():
-    #     if path.is_file():
-    #         current_file = open(path, "r", encoding="utf-8")
-    #         train_data.append([current_file.read(), 0])
-    #         current_file.close()
+    for path in pathlib.Path("aclimdb/train/pos").iterdir():
+        if path.is_file():
+            current_file = open(path, "r", encoding="utf-8")
+            train_data.append([current_file.read(), 1])
+            current_file.close()
+    for path in pathlib.Path("aclimdb/train/neg").iterdir():
+        if path.is_file():
+            current_file = open(path, "r", encoding="utf-8")
+            train_data.append([current_file.read(), 0])
+            current_file.close()
+    for path in pathlib.Path("aclimdb/test/pos").iterdir():
+        if path.is_file():
+            current_file = open(path, "r", encoding="utf-8")
+            train_data.append([current_file.read(), 1])
+            current_file.close()
+    for path in pathlib.Path("aclimdb/test/neg").iterdir():
+        if path.is_file():
+            current_file = open(path, "r", encoding="utf-8")
+            train_data.append([current_file.read(), 0])
+            current_file.close()
 
     '''2021.07.12 讀取 NLTK Data 的 movie reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
     train_nltk_csv = pd.read_csv('train_nltk.csv')
@@ -122,9 +122,9 @@ def train():
     '''pre-trained model、batch size 與 epoch'''
     model = 'deberta'
     model_name_prefix = 'microsoft/'
-    model_name_main = 'deberta-base'
+    model_name_main = 'deberta-large'
     model_name = model_name_prefix + model_name_main
-    batch_size = 37
+    batch_size = 4
     epoch = 10
 
     '''output 資料夾'''
@@ -139,7 +139,7 @@ def train():
     model_args.use_multiprocessing = True
     model_args.save_model_every_epoch = True
     model_args.save_steps = -1
-    model_args.learning_rate = 4e-5
+    # model_args.learning_rate = 4e-5
     model_args.output_dir = output_dir
 
     '''迴歸分析才需要設定'''
