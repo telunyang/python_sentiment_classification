@@ -124,7 +124,7 @@ def train():
     model_name_prefix = 'microsoft/'
     model_name_main = 'deberta-base'
     model_name = model_name_prefix + model_name_main
-    batch_size = 152
+    batch_size = 154
     epoch = 10
 
     '''output 資料夾'''
