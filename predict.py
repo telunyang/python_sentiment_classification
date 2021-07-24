@@ -31,7 +31,7 @@ def predict():
     model_name_prefix = 'microsoft/'
     model_name_main = 'deberta-base'
     model_name = model_name_prefix + model_name_main
-    batch_size = 110
+    batch_size = 256
     epoch = 10
 
     '''output 資料夾'''
