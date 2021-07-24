@@ -32,7 +32,7 @@ def predict():
     model_name_main = 'roberta-base'
     model_name = model_name_prefix + model_name_main
     batch_size = 128
-    epoch = 15
+    epoch = 20
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
@@ -47,7 +47,7 @@ def predict():
     model_args.overwrite_output_dir = False
     model_args.reprocess_input_data = False
     model_args.use_multiprocessing = False
-    model_args.save_model_every_epoch = True
+    model_args.save_model_every_epoch = False
     model_args.save_steps = -1
     # model_args.learning_rate = 4e-5
     model_args.output_dir = output_dir
