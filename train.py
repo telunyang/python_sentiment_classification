@@ -112,8 +112,6 @@ def train():
 
     '''隨機排序訓練資料'''
     random.shuffle(train_data)
-    random.shuffle(train_data)
-    random.shuffle(train_data)
 
     '''轉成 data frame 後，給序欄位名稱'''
     train_df = pd.DataFrame(train_data)
