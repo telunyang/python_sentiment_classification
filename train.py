@@ -40,13 +40,13 @@ def train():
     for dataset in list_dataset_train_aidea:
         train_data.append([dataset[1], dataset[2]])
 
-    '''2021.06.07 讀取 Yelp reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
-    train_yelp_csv = pd.read_csv('train_yelp.csv', names=['sentiment', 'review'])
-    train_yelp_csv.loc[train_yelp_csv.sentiment == 1, 'sentiment'] = 0
-    train_yelp_csv.loc[train_yelp_csv.sentiment == 2, 'sentiment'] = 1
-    list_dataset_train_yelp = train_yelp_csv.values.tolist()
-    for dataset in list_dataset_train_yelp:
-        train_data.append([dataset[1], dataset[0]])
+    # '''2021.06.07 讀取 Yelp reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
+    # train_yelp_csv = pd.read_csv('train_yelp.csv', names=['sentiment', 'review'])
+    # train_yelp_csv.loc[train_yelp_csv.sentiment == 1, 'sentiment'] = 0
+    # train_yelp_csv.loc[train_yelp_csv.sentiment == 2, 'sentiment'] = 1
+    # list_dataset_train_yelp = train_yelp_csv.values.tolist()
+    # for dataset in list_dataset_train_yelp:
+    #     train_data.append([dataset[1], dataset[0]])
 
     '''2021.06.07 讀取 IMDB movie reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
     train_imdb_csv = pd.read_csv('train_imdb.csv')
@@ -120,10 +120,10 @@ def train():
     '''pre-trained model、batch size 與 epoch'''
     model = 'deberta'
     model_name_prefix = 'microsoft/'
-    model_name_main = 'deberta-base'
+    model_name_main = 'deberta-large'
     model_name = model_name_prefix + model_name_main
-    batch_size = 154
-    epoch = 15
+    batch_size = 128
+    epoch = 10
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
