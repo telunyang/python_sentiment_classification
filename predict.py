@@ -27,12 +27,12 @@ def predict():
         test_data.append(dataset[1])
     
     '''pre-trained model、batch size 與 epoch'''
-    model = 'deberta'
-    model_name_prefix = 'microsoft/'
-    model_name_main = 'deberta-large'
+    model = 'roberta'
+    model_name_prefix = ''
+    model_name_main = 'roberta-large'
     model_name = model_name_prefix + model_name_main
     batch_size = 46
-    epoch = 10
+    epoch = 5
 
     '''output 資料夾'''
     output_dir = f"outputs/{model_name_main}-bs-{batch_size}-ep-{epoch}-cls-model/"
