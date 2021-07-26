@@ -122,7 +122,7 @@ def train():
     model_name_prefix = ''
     model_name_main = 'roberta-large'
     model_name = model_name_prefix + model_name_main
-    batch_size = 74
+    batch_size = 76
     epoch = 5
 
     '''output 資料夾'''
