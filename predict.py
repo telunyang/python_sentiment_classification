@@ -31,7 +31,7 @@ def predict():
     model_name_prefix = ''
     model_name_main = 'roberta-base'
     model_name = model_name_prefix + model_name_main
-    batch_size = 244
+    batch_size = 245
     epoch = 5
 
     '''output 資料夾'''
