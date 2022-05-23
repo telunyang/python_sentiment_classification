@@ -3,6 +3,10 @@
 ## 競賽連結
 [電影評論情緒分類](https://aidea-web.tw/topic/c4a666bb-7d83-45a6-8c3b-57514faf2901 "電影評論情緒分類")
 
+## 獎狀
+共 327 個人參加，拿到第 4 名（佳作）
+![](https://i.imgur.com/dHyoCBZ.jpg)
+
 ## 作業環境:
 - Windows 10 Home Edition or Linux Ubuntu 18.04+
 - Anaconda (Python 3.7+)
