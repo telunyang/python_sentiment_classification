@@ -11,7 +11,7 @@ df.insert(0, 'epoch', range(1, 1 + len(df)))
 print(df[ ['epoch', 'precision', 'recall', 'f1_score'] ])
 
 plot = df.plot.line(x='epoch', y=['train_loss', 'eval_loss'])
-plt.title('Movie Review')
+plt.title('Sentiment Classification')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train_loss', 'eval_loss'], loc='upper right')
