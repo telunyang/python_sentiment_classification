@@ -4,6 +4,7 @@ import logging
 import time, pathlib, random
 import torch
 
+
 '''
 訓練參考連結
 [1] Binary Classification
@@ -25,30 +26,23 @@ def log():
     print(f"是否使用 GPU: {torch.cuda.is_available()}")
 
 def train():
-    # 訓練
+    # 讀取資料後，開始訓練
     '''計時開始 - 訓練'''
     tStartTrain = time.time() 
 
-    '''讀取 AIdea 提供的訓練資料集'''
-    train_aidea_csv = pd.read_csv('train.csv')
-
     '''放置符合訓練格式的資料'''
     train_data = []
+
+    '''讀取 AIdea 提供的訓練資料集'''
+    train_aidea_csv = pd.read_csv('train.csv')
 
     '''資料轉換'''
     list_dataset_train_aidea = train_aidea_csv.values.tolist()
     for dataset in list_dataset_train_aidea:
         train_data.append([dataset[1], dataset[2]])
 
-    # '''2021.06.07 讀取 Yelp reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
-    # train_yelp_csv = pd.read_csv('train_yelp.csv', names=['sentiment', 'review'])
-    # train_yelp_csv.loc[train_yelp_csv.sentiment == 1, 'sentiment'] = 0
-    # train_yelp_csv.loc[train_yelp_csv.sentiment == 2, 'sentiment'] = 1
-    # list_dataset_train_yelp = train_yelp_csv.values.tolist()
-    # for dataset in list_dataset_train_yelp:
-    #     train_data.append([dataset[1], dataset[0]])
-
     '''2021.06.07 讀取 IMDB movie reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
+    # https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews/data
     train_imdb_csv = pd.read_csv('train_imdb.csv')
     train_imdb_csv.loc[train_imdb_csv.sentiment == 'negative', 'sentiment'] = 0
     train_imdb_csv.loc[train_imdb_csv.sentiment == 'positive', 'sentiment'] = 1
@@ -57,70 +51,80 @@ def train():
         train_data.append([dataset[0], dataset[1]])
 
     '''2021.06.07 讀取 Bag of Words Meets Bags of Popcorn 的 movie reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
+    # https://www.kaggle.com/competitions/word2vec-nlp-tutorial/data
     train_bowmbop_csv = pd.read_csv('train_bowmbop.tsv', sep = '\t')
     list_dataset_train_bowmbop = train_bowmbop_csv.values.tolist()
     for dataset in list_dataset_train_bowmbop:
         train_data.append([dataset[2], dataset[1]])
 
     '''2021.06.10 讀取 Large Movie Review Dataset 25000 筆訓練資料以及 25000 筆有分類過的測試資料'''
+    # https://ai.stanford.edu/~amaas/data/sentiment/
     for path in pathlib.Path("aclimdb/train/pos").iterdir():
         if path.is_file():
-            current_file = open(path, "r", encoding="utf-8")
-            train_data.append([current_file.read(), 1])
-            current_file.close()
+            with open(path, "r", encoding="utf-8") as current_file:
+                train_data.append([current_file.read(), 1])
     for path in pathlib.Path("aclimdb/train/neg").iterdir():
         if path.is_file():
-            current_file = open(path, "r", encoding="utf-8")
-            train_data.append([current_file.read(), 0])
-            current_file.close()
+            with open(path, "r", encoding="utf-8") as current_file:
+                train_data.append([current_file.read(), 0])
     for path in pathlib.Path("aclimdb/test/pos").iterdir():
         if path.is_file():
-            current_file = open(path, "r", encoding="utf-8")
-            train_data.append([current_file.read(), 1])
-            current_file.close()
+            with open(path, "r", encoding="utf-8") as current_file:
+                train_data.append([current_file.read(), 1])
     for path in pathlib.Path("aclimdb/test/neg").iterdir():
         if path.is_file():
-            current_file = open(path, "r", encoding="utf-8")
-            train_data.append([current_file.read(), 0])
-            current_file.close()
+            with open(path, "r", encoding="utf-8") as current_file:
+                train_data.append([current_file.read(), 0])
 
     '''2021.07.12 讀取 NLTK Data 的 movie reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
-    train_nltk_csv = pd.read_csv('train_nltk.csv')
-    train_nltk_csv.loc[train_nltk_csv.tag == 'neg', 'tag'] = 0
-    train_nltk_csv.loc[train_nltk_csv.tag == 'pos', 'tag'] = 1
-    list_dataset_train_nltk = train_nltk_csv.values.tolist()
-    for dataset in list_dataset_train_nltk:
-        train_data.append([dataset[4], dataset[5]])
+    # 找不到先前的檔案
+    # train_nltk_csv = pd.read_csv('train_nltk.csv')
+    # train_nltk_csv.loc[train_nltk_csv.tag == 'neg', 'tag'] = 0
+    # train_nltk_csv.loc[train_nltk_csv.tag == 'pos', 'tag'] = 1
+    # list_dataset_train_nltk = train_nltk_csv.values.tolist()
+    # for dataset in list_dataset_train_nltk:
+    #     train_data.append([dataset[4], dataset[5]])
 
     '''2021.07.12 讀取 sentence polarity dataset v1.0 的 movie reviews，作為訓練資料集之一；修改內部的 label，符合 AIdea 提供的訓練格式'''
-    fp = open("rt-polaritydata/rt-polarity.pos", "r", encoding="latin-1")
-    strTmp = fp.read()
-    fp.close()
+    # https://www.kaggle.com/datasets/nltkdata/sentence-polarity
+    with open("rt-polaritydata/rt-polarity.pos", "r", encoding="latin-1") as fp:
+        strTmp = fp.read()
     strTmp = strTmp.encode('utf-8')
     listPos = strTmp.decode().split("\n")
     for text in listPos:
         if text != '':
             train_data.append([text, 1])
-    fp = open("rt-polaritydata/rt-polarity.neg", "r", encoding="latin-1")
-    strTmp = fp.read()
-    fp.close()
+    with open("rt-polaritydata/rt-polarity.neg", "r", encoding="latin-1") as fp:
+        strTmp = fp.read()
     strTmp = strTmp.encode('utf-8')
     listNeg = strTmp.decode().split("\n")
     for text in listNeg:
         if text != '':
             train_data.append([text, 0])
 
+    '''或許有些可以用'''
+    # http://www.cs.cornell.edu/people/pabo/movie-review-data/
+
+
+
+
+
+    # 切分資料
     '''隨機排序訓練資料'''
-    random.shuffle(train_data)
+    random.shuffle(train_data) # 將訓練資料重新隨機排序
+    middle = int(len(train_data) * 0.7) # 訓練資料的總數 (70%)
+    list_train = train_data[:middle] # 透過 slicing 取得訓練資料 (70%)
+    list_eval = train_data[middle:] # 透過 slicing 取得評估資料 (30%)
 
-    '''轉成 data frame 後，給序欄位名稱'''
-    train_df = pd.DataFrame(train_data)
-    train_df.columns = ["text", "labels"]
 
+
+
+
+    # 模型手動設定
     '''pre-trained model、batch size 與 epoch'''
-    model = 'deberta'
-    model_name_prefix = 'microsoft/'
-    model_name_main = 'deberta-base'
+    model = 'roberta'
+    model_name_prefix = ''
+    model_name_main = 'roberta-base'
     model_name = model_name_prefix + model_name_main
     batch_size = 32
     epoch = 20
@@ -132,20 +136,46 @@ def train():
     model_args = ClassificationArgs()
     model_args.train_batch_size = batch_size
     model_args.num_train_epochs = epoch
-    model_args.overwrite_output_dir = False
-    model_args.reprocess_input_data = False
+    model_args.overwrite_output_dir = True
+    model_args.reprocess_input_data = True
     model_args.use_multiprocessing = False
-    model_args.save_model_every_epoch = False
+    model_args.save_model_every_epoch = False # https://simpletransformers.ai/docs/tips-and-tricks/#dont-save-model-checkpoints
     model_args.save_steps = -1
     # model_args.learning_rate = 4e-5
     model_args.output_dir = output_dir
 
-    '''迴歸分析才需要設定'''
+    ''' Early Stopping 設定'''
+    # https://simpletransformers.ai/docs/tips-and-tricks/#using-early-stopping
+    # https://www.voxco.com/blog/matthewss-correlation-coefficient-definition-formula-and-advantages/
+    model_args.use_early_stopping = False
+    model_args.early_stopping_metric = "mcc" # Matthews's correlation coefficient
+    model_args.early_stopping_delta = 0.01 # test data does not improve upon the best mcc score by at least 0.01
+    model_args.early_stopping_patience = 5 # 5 consecutive evaluations
+
+    '''如果 use_early_stopping 為 False 的話，evaluate_during_training 可以改成 True'''
+    model_args.evaluate_during_training = True
+    model_args.eval_batch_size = batch_size
+    model_args.use_multiprocessing_for_evaluation = False
+
+    '''每幾個 steps 執行一次 eval'''
+    model_args.evaluate_during_training_steps = 2000 # An evaluation will occur once for every 2000 training steps.
+
+    '''迴歸任務才需要設定'''
     # model_args.num_labels = 1
     # model_args.regression = True
 
     '''建立 ClassificationModel'''
-    model = ClassificationModel(model, model_name, use_cuda=torch.cuda.is_available(), cuda_device=0, args=model_args)
+    model = ClassificationModel(
+        model, 
+        model_name, 
+        use_cuda=torch.cuda.is_available(), 
+        cuda_device=0, # 使用第 1 顆 GPU (Device ID: 0)
+        args=model_args
+    )
+
+    '''train_data 轉成 data frame 後，給序欄位名稱'''
+    train_df = pd.DataFrame(list_train)
+    train_df.columns = ["text", "labels"]
 
     '''訓練model'''
     model.train_model(train_df)
@@ -154,35 +184,31 @@ def train():
     tEndTrain = time.time()
 
     '''訓練執行的時間'''
-    print("[Train] It cost %f sec" % (tEndTrain - tStartTrain))
+    print("[Train] It took %f sec" % (tEndTrain - tStartTrain))
 
 
 
-    # # 評估
-    # '''
-    # 評估資料，從訓練資料集中提取部分資料，
-    # 例如 20000 筆，其中 15000 筆
-    # '''
-    # # eval_csv = pd.read_csv('train.csv')
-    # list_tmp = list_dataset
-    # random.shuffle(list_tmp)
 
 
-    # '''放置符合評估格式的資料'''
-    # eval_data = []
+    # 評估
+    '''計時開始 - 評估'''
+    tStartEval = time.time() 
 
-    # '''資料轉換'''
-    # list_eval_dataset = eval_csv.values.tolist()
-    # for dataset in list_eval_dataset:
-    #     eval_data.append([dataset[1], dataset[2]])
+    '''eval_data 轉成 data frame 後，給序欄位名稱'''
+    eval_df = pd.DataFrame(list_eval)
+    eval_df.columns = ["text", "labels"]
 
-    # '''轉成 data frame 後，給序欄位名稱'''
-    # eval_df = pd.DataFrame(eval_data)
-    # eval_df.columns = ["text", "labels"]
+    '''評估模型'''
+    result, model_outputs, wrong_predictions = model.eval_model(eval_df) 
+    print(f"result: {result}, model_outputs: {model_outputs}, wrong_predictions: {wrong_predictions}")
 
-    # '''評估模型'''
-    # result, model_outputs, wrong_predictions = model.eval_model(eval_df) 
-    # print(f"result: {result}, model_outputs: {model_outputs}, wrong_predictions: {wrong_predictions}")
+    '''計時結束 - 評估'''
+    tEndEval = time.time()
+
+    '''評估執行的時間'''
+    print("[Evaluation] It took %f sec" % (tEndEval - tStartEval))
+
+
 
 
 
@@ -211,7 +237,7 @@ def train():
     tEndPredict = time.time()
 
     '''預測執行的時間'''
-    print("[Predict] It cost %f sec" % (tEndPredict - tStartPredict))
+    print("[Predict] It took %f sec" % (tEndPredict - tStartPredict))
 
 
 if __name__ == "__main__":

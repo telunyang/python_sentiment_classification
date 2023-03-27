@@ -27,9 +27,9 @@ def predict():
         test_data.append(dataset[1])
     
     '''pre-trained model、batch size 與 epoch'''
-    model = 'deberta'
-    model_name_prefix = 'microsoft/'
-    model_name_main = 'deberta-base'
+    model = 'roberta'
+    model_name_prefix = ''
+    model_name_main = 'roberta-base'
     model_name = model_name_prefix + model_name_main
     batch_size = 32
     epoch = 20
@@ -75,14 +75,14 @@ def predict():
     '''將結果存回 excel'''
     # strDataTime = datetime.datetime.today().strftime("%Y%m%d%H%M%S")
     result_df = pd.DataFrame(list_result)
-    result_df.columns = ["ID", "sentiment"]
+    result_df.columns = ["text", "labels"]
     result_df.to_csv(f"{model_name_main}-bs-{batch_size}-ep-{epoch}.csv", index=False)
 
     '''計時結束'''
     tEnd = time.time()
 
     '''輸出程式執行的時間'''
-    print("It cost %f sec" % (tEnd - tStart))
+    print("It took %f sec" % (tEnd - tStart))
 
 if __name__ == "__main__":
     log()
